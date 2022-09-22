@@ -20,14 +20,26 @@ public class Movie {
     private String title;
 
     @Column(nullable = false)
-    private String genre;
+    private Long genreID;
 
     @Column(nullable = false)
-    private String rating;
+    private Float rating;
 
     @Column(nullable = false)
-    private String director;
+    private Long directorID;
 
     @Column(nullable = false)
     private String plot;
+
+    @Column(nullable = false)
+    private Integer duration;
+
+    @Column(nullable = false)
+    private String poster;
+
+    @Column(nullable = false)
+    private String trailer;
+
+    @Column(nullable = false)
+    private Integer premiere;
 }
