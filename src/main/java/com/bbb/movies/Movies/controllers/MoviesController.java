@@ -21,7 +21,7 @@ public class MoviesController {
     }
     @GetMapping("/{id}")
     public Optional<Movie> fetchMovieById(@PathVariable long id) {
-        Optional<Movie> optionalMovie = MoviesRepository.findById(id);
+        Optional<Movie> optionalMovie = moviesRepository.findById(id);
         if(optionalMovie.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie id " + id + " not found");
         }
@@ -34,24 +34,24 @@ public class MoviesController {
 //        newPost.setCategories(new ArrayList<>());
 //        Category cat1 = categoriesRepository.findById(1L).get();
 //        newPost.getCategories().add(cat1);
-        MoviesRepository.save(newMovie);
+        moviesRepository.save(newMovie);
     }
     @DeleteMapping("/{id}")
     public void deleteMovieById(@PathVariable long id) {
-        Optional<Movie> optionalMovie = MoviesRepository.findById(id);
+        Optional<Movie> optionalMovie = moviesRepository.findById(id);
         if(optionalMovie.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie id " + id + " not found");
         }
-        MoviesRepository.deleteById(id);
+        moviesRepository.deleteById(id);
     }
     @PutMapping("/{id}")
-    public void updateMovieById(@RequestBody Post updatedMovie, @PathVariable long id) {
-        Optional<Movie> originalMovie = MoviesRepository.findById(id);
+    public void updateMovieById(@RequestBody Movie updatedMovie, @PathVariable long id) {
+        Optional<Movie> originalMovie = moviesRepository.findById(id);
         if(originalMovie.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie id " + id + " not found");
         }
         updatedMovie.setId(id);
         BeanUtils.copyProperties(updatedMovie, originalMovie.get(), FieldHelper.getNullPropertyNames(updatedMovie));
-        MoviesRepository.save(originalMovie.get());
+        moviesRepository.save(originalMovie.get());
     }
 }
