@@ -36,8 +36,8 @@ public class DirectorsController {
     }
     @DeleteMapping("/{id}")
     public void deleteDirectorById(@PathVariable long id) {
-        Optional<Director> optionaldirector = directorsRepository.findById(id);
-        if(optionaldirector.isEmpty()) {
+        Optional<Director> optionalDirector = directorsRepository.findById(id);
+        if(optionalDirector.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "director id " + id + " not found");
         }
         directorsRepository.deleteById(id);

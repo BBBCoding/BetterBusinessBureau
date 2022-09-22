@@ -1,7 +1,6 @@
 package com.bbb.movies.Movies.controllers;
 
 import com.bbb.movies.Movies.repositories.ActorsRepository;
-import com.bbb.movies.Movies.repositories.MoviesRepository;
 import com.bbb.movies.Movies.views.Actor;
 import com.bbb.movies.Movies.views.FieldHelper;
 import lombok.AllArgsConstructor;
