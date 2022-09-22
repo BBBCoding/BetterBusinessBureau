@@ -1,6 +1,7 @@
 package com.bbb.movies.Movies.controllers;
 
 import com.bbb.movies.Movies.repositories.MoviesRepository;
+import com.bbb.movies.Movies.views.FieldHelper;
 import com.bbb.movies.Movies.views.Movie;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
