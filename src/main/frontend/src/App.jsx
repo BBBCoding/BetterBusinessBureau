@@ -11,7 +11,7 @@ function App() {
 
               <div className="about-movie">
                   <div className="nav">
-                      <nav>
+                      <nav className="main-nav">
                           <a id="about" href="/about" data-link>About</a>
                           <a id="trailers" href="/trailers" data-link>Trailers</a>
                           <a id="featured" href="/featured" data-link>Featured</a>
@@ -24,9 +24,11 @@ function App() {
                   </div>
               </div>
               <div className="right-side">
-                  <div className="socials">
-                      Socials
-                  </div>
+                  <nav className="socials">
+                      <a id="facebook" href="/facebook" data-link>Facebook</a>
+                      <a id="youtube" href="/youtube" data-link>YouTube</a>
+                      <a id="github" href="/github" data-link>GitHub</a>
+                  </nav>
                   <div className="movie-info">
                       <h5 className="premiere">PREMIERE</h5>
                         <p>4 October 2019</p>
@@ -37,11 +39,16 @@ function App() {
                       <h5 className="genre">GENRE</h5>
                         <p>Suspense, Thriller</p>
                   </div>
+                  <div className="trailers">
+                      <iframe width="175px" height="100px" src="https://www.youtube.com/embed/zAGVQLHvwOY?autoplay=1&mute=1">
+                      </iframe>
+                  </div>
               </div>
           </div>
       </div>
 
   )
+
 }
 
 export default App
