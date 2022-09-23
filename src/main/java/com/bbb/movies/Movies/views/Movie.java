@@ -30,6 +30,18 @@ public class Movie {
             inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
     private Collection<Genre> genreID;
 
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = { CascadeType.ALL },
+            targetEntity = Genre.class)
+    @JoinTable(
+            name="movies_media",
+            joinColumns = {@JoinColumn(name = "movie_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name="media_id", nullable = false, updatable = false)},
+            foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
+            inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
+    private Collection<Media> mediaID;
+
+
     @Column(name="budget", nullable = true)
     private String budget;
 
