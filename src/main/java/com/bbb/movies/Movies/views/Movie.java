@@ -2,6 +2,8 @@ package com.bbb.movies.Movies.views;
 
 import lombok.*;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,32 +16,42 @@ public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id", nullable = false, unique = true)
     private Long id;
 
-    @Column(nullable = false)
-    private String title;
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = { CascadeType.ALL },
+            targetEntity = Genre.class)
+    @JoinTable(
+            name="movies_genres",
+            joinColumns = {@JoinColumn(name = "movie_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name="genre_id", nullable = false, updatable = false)},
+            foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT),
+            inverseForeignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
+    private Collection<Genre> genreID;
 
-    @Column(nullable = false)
-    private Long genreID;
+    @Column(name="budget", nullable = true)
+    private String budget;
 
-    @Column(nullable = false)
-    private Float rating;
-
-    @Column(nullable = false)
-    private Long directorID;
-
-    @Column(nullable = false)
+    @Column(name="plot", nullable = true)
     private String plot;
 
-    @Column(nullable = false)
-    private Integer duration;
+    @Column(name="release_date", nullable = true)
+    private String release_date;
 
-    @Column(nullable = false)
-    private String poster;
+    @Column(name="revenue", nullable = true)
+    private int revenue;
 
-    @Column(nullable = false)
-    private String trailer;
+    @Column(name="runtime", nullable = true)
+    private int runtime;
 
-    @Column(nullable = false)
-    private Integer premiere;
+    @Column(name="tagline", nullable = true)
+    private String tagline;
+
+    @Column(name="title", nullable = false)
+    private String title;
+
+    @Column(name="vote_average", nullable = true)
+    private double vote_average;
+
 }
