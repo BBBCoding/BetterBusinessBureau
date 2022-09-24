@@ -1,19 +1,20 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import './App.css'
-
-fetch('http://localhost:8080/api/v1/movies')
-    .then(response => response.json())
-    .then(data => console.log(data))
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from "./views/Home.jsx";
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-      <div className="outer-div">
-
-      </div>
+    <Router>
+        <Switch>
+            <Route exact path="/">
+                <Home />
+            </Route>
+        </Switch>
+    </Router>
   )
 
 }
-export default App
+export default App;

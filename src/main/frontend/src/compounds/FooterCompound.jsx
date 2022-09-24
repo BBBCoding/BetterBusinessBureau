@@ -1,9 +1,9 @@
 import React from "react";
-import FooterWrapper from "../components/Footer/FooterWrapper";
-import FooterTitle from "../components/Footer/FooterTitle";
-import FooterRow from "../components/Footer/FooterRow";
-import FooterColumn from "../components/Footer/FooterColumn";
-import FooterLink from "../components/Footer/FooterLink";
+import FooterWrapper from "../components/Footer/FooterWrapper.jsx";
+import FooterTitle from "../components/Footer/FooterTitle.jsx";
+import FooterRow from "../components/Footer/FooterRow.jsx";
+import FooterColumn from "../components/Footer/FooterColumn.jsx";
+import FooterLink from "../components/Footer/FooterLink.jsx";
 
 function FooterCompound() {
   return (
