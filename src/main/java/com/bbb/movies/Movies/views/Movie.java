@@ -1,5 +1,6 @@
 package com.bbb.movies.Movies.views;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import javax.persistence.*;
@@ -32,16 +33,18 @@ public class Movie {
     @JsonIgnoreProperties("genres_movies")
     private Collection<Genre> genreID;
 
-    @OneToOne(fetch = FetchType.LAZY,
-            cascade = { CascadeType.ALL },
-            targetEntity = Media.class)
-    @JoinColumn(name="media_links", nullable = true)
+    @OneToOne(cascade = { CascadeType.ALL },
+            targetEntity = Media.class,
+            mappedBy = "movie")
+    @PrimaryKeyJoinColumn
+    @JsonIgnoreProperties("movie")
     private Media media;
 
-    @OneToOne(fetch = FetchType.LAZY,
-            cascade = { CascadeType.ALL },
-            targetEntity = Poster.class)
-    @JoinColumn(name="poster_links", nullable = true)
+    @OneToOne(cascade = { CascadeType.ALL },
+            targetEntity = Poster.class,
+            mappedBy = "movie")
+    @PrimaryKeyJoinColumn
+    @JsonIgnoreProperties("movie")
     private Poster poster;
 
     @Column(name="budget", nullable = true)

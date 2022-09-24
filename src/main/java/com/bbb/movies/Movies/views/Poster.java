@@ -23,6 +23,8 @@ public class Poster {
     @Column(name="backdrop_path", nullable = true)
     private String backdrop_path;
 
-    @OneToOne(mappedBy = "poster")
+    @OneToOne
+    @MapsId
+    @JoinColumn(name="poster_id")
     private Movie movie;
 }

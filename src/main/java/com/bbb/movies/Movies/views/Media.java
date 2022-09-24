@@ -22,6 +22,8 @@ public class Media {
     @Column(name="trailer_path", nullable = true)
     private String trailer_path;
 
-    @OneToOne(mappedBy = "media")
+    @OneToOne
+    @MapsId
+    @JoinColumn(name="media_id")
     private Movie movie;
 }
