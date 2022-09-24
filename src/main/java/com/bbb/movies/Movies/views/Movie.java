@@ -35,11 +35,13 @@ public class Movie {
     @OneToOne(fetch = FetchType.LAZY,
             cascade = { CascadeType.ALL },
             targetEntity = Media.class)
+    @JoinColumn(name="media_links", nullable = true)
     private Media media;
 
     @OneToOne(fetch = FetchType.LAZY,
             cascade = { CascadeType.ALL },
             targetEntity = Poster.class)
+    @JoinColumn(name="poster_links", nullable = true)
     private Poster poster;
 
     @Column(name="budget", nullable = true)

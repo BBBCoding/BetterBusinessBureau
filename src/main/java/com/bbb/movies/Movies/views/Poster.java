@@ -2,10 +2,7 @@ package com.bbb.movies.Movies.views;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,4 +22,7 @@ public class Poster {
 
     @Column(name="backdrop_path", nullable = true)
     private String backdrop_path;
+
+    @OneToOne(mappedBy = "poster")
+    private Movie movie;
 }
