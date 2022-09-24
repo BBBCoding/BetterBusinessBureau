@@ -1,62 +1,59 @@
 package com.bbb.movies.Movies.controllers;
 
-import com.bbb.movies.Movies.repositories.MoviesRepository;
-import com.bbb.movies.Movies.views.FieldHelper;
+import com.bbb.movies.Movies.exceptions.RecordNotFoundException;
+import com.bbb.movies.Movies.services.MovieServices;
 import com.bbb.movies.Movies.views.Movie;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
-import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
+
+
+
+
 
 @AllArgsConstructor
 @RestController
 @RequestMapping(value = "/api/v1/movies", produces = "application/json")
 @CrossOrigin("*")
 public class MoviesController {
-    private MoviesRepository moviesRepository;
-    @GetMapping("")
-    @Transactional
-    public List<Movie> fetchMovies() {
-        return moviesRepository.findAll();
-    }
+
+    @Autowired
+    MovieServices service;
+
+    @GetMapping
+    public ResponseEntity<List<Movie>> fetchMovies(
+                                                   @RequestParam(defaultValue = "0") Integer pageNo,
+                                                   @RequestParam(defaultValue = "100") Integer pageSize,
+                                                   @RequestParam(defaultValue = "id") String sortBy) {
+
+
+            List<Movie> list = service.getAllMovies(pageNo, pageSize, sortBy);
+
+            return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
+        }
     @GetMapping("/{id}")
-    public Optional<Movie> fetchMovieById(@PathVariable long id) {
-        Optional<Movie> optionalMovie = moviesRepository.findById(id);
-        if(optionalMovie.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie id " + id + " not found");
-        }
-        return optionalMovie;
+    public ResponseEntity<Movie> getEmployeeById(@PathVariable("id") Long id)
+            throws RecordNotFoundException {
+        Movie entity = service.getMovieById(id);
+
+        return new ResponseEntity<>(entity, new HttpHeaders(), HttpStatus.OK);
     }
-    @PostMapping("")
-    public void createMovie(@RequestBody Movie newMovie) {
-//        User author = usersRepository.findById(1L).get();
-//        newPost.setAuthor(author);
-//        newPost.setCategories(new ArrayList<>());
-//        Category cat1 = categoriesRepository.findById(1L).get();
-//        newPost.getCategories().add(cat1);
-        moviesRepository.save(newMovie);
+
+    @PostMapping
+    public ResponseEntity<Movie> createOrUpdateEmployee(Movie movie) {
+        Movie updated = service.createOrUpdateMovie(movie);
+        return new ResponseEntity<>(updated, new HttpHeaders(), HttpStatus.OK);
     }
+
     @DeleteMapping("/{id}")
-    public void deleteMovieById(@PathVariable long id) {
-        Optional<Movie> optionalMovie = moviesRepository.findById(id);
-        if(optionalMovie.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie id " + id + " not found");
-        }
-        moviesRepository.deleteById(id);
-    }
-    @PutMapping("/{id}")
-    public void updateMovieById(@RequestBody Movie updatedMovie, @PathVariable long id) {
-        Optional<Movie> originalMovie = moviesRepository.findById(id);
-        if(originalMovie.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Movie id " + id + " not found");
-        }
-        updatedMovie.setId(id);
-        BeanUtils.copyProperties(updatedMovie, originalMovie.get(), FieldHelper.getNullPropertyNames(updatedMovie));
-        moviesRepository.save(originalMovie.get());
+    public HttpStatus deleteEmployeeById(@PathVariable("id") Long id)
+            throws RecordNotFoundException {
+        service.deleteMovieById(id);
+        return HttpStatus.FORBIDDEN;
     }
 }
