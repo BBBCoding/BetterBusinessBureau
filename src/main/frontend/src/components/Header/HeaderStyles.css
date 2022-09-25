@@ -1,3 +1,13 @@
+:root {
+  --main-background: #7c7587;
+  --main-buttons: #e1909e;
+  --main-logo: #ffcb74;
+  --second-logo: #f9f871;
+  --main-box-shadow: #ac839e;
+  --text: #ffffff;
+  --input: #fefefe;
+  --misc-color: #ffa68c;
+}
 .header-wrapper-home {
   background-position: top left;
   background-size: cover;

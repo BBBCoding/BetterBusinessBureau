@@ -47,7 +47,7 @@ function Home() {
         })
     });
     console.log(movies ?? "cannot find movies");
-
+console.log(movies[0].data[1]?.title ?? "has no data yet");
     const [category, setCategory] = useState("films");
     const currentCategory = category === "films";
     const [showCardFeature, setShowCardFeature] = useState(false);
@@ -81,11 +81,11 @@ function Home() {
                         Watch
                         { error && <div>{ error }</div> }
                         { isPending && <div>Loading...</div> }
-                        { movies[0].data[0].title }
+                        {/*{ movies[0].data[0].title }*/}
                         Now
                     </FeatureTitle>
                     <FeatureSubTitle className="feature-subtitle-browse">
-                        { movies[0].data[0].plot }
+                        {/*{ movies[0].data[0].plot }*/}
                     </FeatureSubTitle>
                     <PlayButton onClick={() => setShowPlayer(true)}>Play</PlayButton>
                     {showPlayer ? (
