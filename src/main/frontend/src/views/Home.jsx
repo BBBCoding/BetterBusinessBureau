@@ -113,6 +113,14 @@ return (
                 >
                     Films
                 </HeaderLink>
+                <HeaderLink
+                    className={
+                        category === "genres" ? "header-link-bold" : "header-link"
+                    }
+                    onClick={() => setCategory("genres")}
+                >
+                    Genres
+                </HeaderLink>
             </NavBar>
             <FeatureWrapper>
                 <FeatureTitle className="feature-title-browse">
