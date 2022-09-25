@@ -22,90 +22,31 @@ import PlayerVideo from "../components/Movies/PlayerVideo.jsx";
 import PlayerOverlay from "../components/Movies/PlayerOverlay.jsx";
 import FooterCompound from "../compounds/FooterCompound.jsx";
 import YoutubeLinkFixer from "../youtubeLinkFixer.js"
-
+import Movies from "./movies.js";
 function Home() {
 
     const {data: films, isPending, error} = Fetch("http://localhost:8080/api/v1/movies");
-    console.log(films ?? "cant't find films");
-    if (!isPending) {
-        let movies = [
-            {
-                title: "Action",
-                data: films?.filter((item) => item.genreID[0]?.genreName === "action")
-            },
-            {
-                title: "Adventure",
-                data: films?.filter((item) => item.genreID.genreName === "adventure"),
-            },
-            {
-                title: "Animated",
-                data: films?.filter((item) => item.genreID.genreName === "animated"),
-            },
-            {
-                title: "Comedy",
-                data: films?.filter((item) => item.genreID.genreName === "comedy"),
-            },
-            {
-                title: "Crime",
-                data: films?.filter((item) => item.genreID.genreName === "crime"),
-            }
-            // ,
-            // {
-            //     title: "Documentary",
-            //     data: films.filter((item) => item.genreID.genreName === "documentary")
-            // },
-            // {
-            //     title: "Drama",
-            //     data: films.filter((item) => item.genreID.genreName === "drama"),
-            // },
-            // {
-            //     title: "Family",
-            //     data: films.filter((item) => item.genreID.genreName === "family"),
-            // },
-            // {
-            //     title: "Fantasy",
-            //     data: films.filter((item) => item.genreID.genreName === "fantasy"),
-            // },
-            // {
-            //     title: "History",
-            //     data: films.filter((item) => item.genreID.genreName === "history"),
-            // },
-            // {
-            //     title: "Horror",
-            //     data: films.filter((item) => item.genreID.genreName === "horror")
-            // },
-            // {
-            //     title: "Music",
-            //     data: films.filter((item) => item.genreID.genreName === "music"),
-            // },
-            // {
-            //     title: "Mystery",
-            //     data: films.filter((item) => item.genreID.genreName === "mystery"),
-            // },
-            // {
-            //     title: "Sci-Fi",
-            //     data: films.filter((item) => item.genreID.genreName === "sci fi"),
-            // },
-            // {
-            //     title: "Thriller",
-            //     data: films.filter((item) => item.genreID.genreName === "thriller"),
-            // },
-            // {
-            //     title: "TV Movie",
-            //     data: films.filter((item) => item.genreID.genreName === "TV movie")
-            // },
-            // {
-            //     title: "War",
-            //     data: films.filter((item) => item.genreID.genreName === "war"),
-            // },
-            // {
-            //     title: "Western",
-            //     data: films.filter((item) => item.genreID.genreName === "western"),
-            // }
-        ];
-        console.log(movies ?? "Loading...");
-    }
+    // console.log(films ?? "cannot find films");
+    let movies = Movies;
 
+    films?.forEach(film => {
+        if (film.genreID.length === 0) {
+            movies[17].data.push(film);
+        }
+        film.genreID.forEach(genre => {
+            movies.forEach(movie => {
+                if (genre.genreName === movie.title.toLowerCase()) {
+                    movie.data.push(film);
+                }
+            });
+        })
+    });
+    movies.forEach(movie => {
+        movie.data.forEach(film => {
+            film.media.trailer_path = YoutubeLinkFixer(film.media.trailer_path);
+        })
+    });
+    console.log(movies ?? "cannot find movies");
 
     const [category, setCategory] = useState("films");
     const currentCategory = category === "films";
