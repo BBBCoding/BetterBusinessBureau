@@ -1,20 +1,18 @@
 import './index.css'
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
 import Home from "./views/Home";
 import Genres from "./views/Genres.jsx";
+import {Route, Routes, BrowserRouter as Router} from "react-router-dom";
+
 
 
 function App() {
   return (
       <Router>
-        <Switch>
-          <Router exact path="/">
-            <Home></Home>
-          </Router>
-          <Router exact path="/genre">
-            <Genres></Genres>
-          </Router>
-        </Switch>
+          <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/:id" element={<Genres />} />
+          </Routes>
       </Router>
   )
 }

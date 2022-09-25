@@ -25,8 +25,8 @@ import FooterCompound from "../compounds/FooterCompound.jsx";
 
 function Home() {
 
-const { data: movies, isPending, error } = Fetch("http://localhost:8080/api/v1/movies");
-console.log(data);
+// const { data: movies, isPending, error } = Fetch("http://localhost:8080/api/v1/movies");
+// console.log(data);
 // films = [
 //     {   title: "Action",
 //         data: films.filter((item) => item.genreID.genreName === "action") },
