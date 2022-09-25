@@ -78,14 +78,14 @@ function Home() {
                 </NavBar>
                 <FeatureWrapper>
                     <FeatureTitle className="feature-title-browse">
-                        Watch Joker Now
+                        Watch
+                        { error && <div>{ error }</div> }
+                        { isPending && <div>Loading...</div> }
+                        { movies[0].data[0].title }
+                        Now
                     </FeatureTitle>
                     <FeatureSubTitle className="feature-subtitle-browse">
-                        Forever alone in a crowd, failed comedian Arthur Fleck seeks
-                        connection as he walks the streets of Gotham City. Arthur wears two
-                        masks, the one he paints for his day job as a clown, and the guise
-                        he projects in a futile attempt to feel like he is part of the world
-                        around him.
+                        { movies[0].data[0].plot }
                     </FeatureSubTitle>
                     <PlayButton onClick={() => setShowPlayer(true)}>Play</PlayButton>
                     {showPlayer ? (
