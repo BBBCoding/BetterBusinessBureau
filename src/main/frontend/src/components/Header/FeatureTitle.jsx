@@ -1,4 +1,3 @@
-import React from "react";
 import "./FeatureStyles.css";
 
 function FeatureTitle({ children, ...restProps }) {

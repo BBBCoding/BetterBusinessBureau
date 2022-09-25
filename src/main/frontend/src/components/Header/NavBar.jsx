@@ -1,4 +1,3 @@
-import React from "react";
 import "./HeaderStyles.css";
 
 function NavBar({ children, ...restProps }) {

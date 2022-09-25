@@ -1,4 +1,3 @@
-import React from "react";
 import "./FeatureStyles.css";
 
 function Warning({ children, ...restProps }) {

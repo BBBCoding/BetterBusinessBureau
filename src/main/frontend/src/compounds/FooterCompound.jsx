@@ -1,4 +1,3 @@
-import React from "react";
 import FooterWrapper from "../components/Footer/FooterWrapper.jsx";
 import FooterTitle from "../components/Footer/FooterTitle.jsx";
 import FooterRow from "../components/Footer/FooterRow.jsx";
