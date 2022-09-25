@@ -1,23 +1,19 @@
-import { useState } from 'react'
 import './index.css'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./views/Home";
-import NavBar from "./components/Header/NavBar.jsx";
+import Genres from "./views/Genres.jsx";
+
 
 function App() {
-  // const [count, setCount] = useState(0)
   return (
       <Router>
         <Switch>
           <Router exact path="/">
-            Home
+            <Home></Home>
           </Router>
           <Router path="/genre">
-            Genres
+            <Genres></Genres>
           </Router>
-          {/*<Router path="/">*/}
-          {/*  Home*/}
-          {/*</Router>*/}
         </Switch>
       </Router>
   )

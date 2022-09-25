@@ -25,7 +25,7 @@ import FooterCompound from "../compounds/FooterCompound.jsx";
 
 function Home() {
 
-const { data, isPending, error } = Fetch("http://localhost:8080/api/movies");
+const { data: movies, isPending, error } = Fetch("http://localhost:8080/api/v1/movies");
 console.log(data);
 // films = [
 //     {   title: "Action",
