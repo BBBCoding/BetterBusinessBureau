@@ -78,21 +78,17 @@ console.log(movies[0].data[1]?.title ?? "has no data yet");
                 </NavBar>
                 <FeatureWrapper>
                     <FeatureTitle className="feature-title-browse">
-                        Watch
+                        Watch&nbsp;
                         { error && <div>{ error }</div> }
                         { isPending && <div>Loading...</div> }
-                        {/*{ movies[0].data[0].title }*/}
-                        Now
+                        { movies[0].data[0]?.title }
+                        &nbsp;Now
                     </FeatureTitle>
                     <FeatureSubTitle className="feature-subtitle-browse">
-                        {/*{ movies[0].data[0].plot }*/}
+                        { movies[0].data[0]?.plot }
                     </FeatureSubTitle>
                     <PlayButton onClick={() => setShowPlayer(true)}>Play</PlayButton>
-                    {showPlayer ? (
-                        <PlayerOverlay onClick={() => setShowPlayer(false)}>
-                            <PlayerVideo src="" type="video/mp4" />
-                        </PlayerOverlay>
-                    ) : null}
+                    { movies[0].data[0]?.media.trailer_path }
                 </FeatureWrapper>
             </HeaderWrapper>
 
