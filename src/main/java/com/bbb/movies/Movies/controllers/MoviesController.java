@@ -28,7 +28,7 @@ public class MoviesController {
     @GetMapping
     public ResponseEntity<List<Movie>> fetchMovies(
                                                    @RequestParam(defaultValue = "0") Integer pageNo,
-                                                   @RequestParam(defaultValue = "100") Integer pageSize,
+                                                   @RequestParam(defaultValue = "40") Integer pageSize,
                                                    @RequestParam(defaultValue = "id") String sortBy) {
 
 
