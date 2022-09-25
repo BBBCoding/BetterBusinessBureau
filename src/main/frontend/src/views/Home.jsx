@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import Fetch from "../custom-hooks/fetch.jsx";
+import Fetch from "../custom-hooks/useFetch.jsx";
 import HeaderWrapper from "../components/Header/HeaderWrapper.jsx";
 import NavBar from "../components/Header/NavBar.jsx";
 import Logo from "../components/Header/Logo.jsx";
@@ -25,29 +25,77 @@ import FooterCompound from "../compounds/FooterCompound.jsx";
 
 function Home() {
 
-// let { films } = Fetch("films");
+const { data, isPending, error } = Fetch("http://localhost:8080/api/movies");
+console.log(data);
 // films = [
-//     { title: "Drama", data: films.filter((item) => item.genre === "drama") },
+//     {   title: "Action",
+//         data: films.filter((item) => item.genreID.genreName === "action") },
+//     {
+//         title: "Adventure",
+//         data: films.filter((item) => item.genreID.genreName === "adventure"),
+//     },
+//     {
+//         title: "Animated",
+//         data: films.filter((item) => item.genreID.genreName === "animated"),
+//     },
+//     {
+//         title: "Comedy",
+//         data: films.filter((item) => item.genreID.genreName === "comedy"),
+//     },
+//     {
+//         title: "Crime",
+//         data: films.filter((item) => item.genreID.genreName === "crime"),
+//     },
+//     {   title: "Documentary",
+//         data: films.filter((item) => item.genreID.genreName === "documentary") },
+//     {
+//         title: "Drama",
+//         data: films.filter((item) => item.genreID.genreName === "drama"),
+//     },
+//     {
+//         title: "Family",
+//         data: films.filter((item) => item.genreID.genreName === "family"),
+//     },
+//     {
+//         title: "Fantasy",
+//         data: films.filter((item) => item.genreID.genreName === "fantasy"),
+//     },
+//     {
+//         title: "History",
+//         data: films.filter((item) => item.genreID.genreName === "history"),
+//     },
+//     {   title: "Horror",
+//         data: films.filter((item) => item.genreID.genreName === "horror") },
+//     {
+//         title: "Music",
+//         data: films.filter((item) => item.genreID.genreName === "music"),
+//     },
+//     {
+//         title: "Mystery",
+//         data: films.filter((item) => item.genreID.genreName === "mystery"),
+//     },
+//     {
+//         title: "Sci-Fi",
+//         data: films.filter((item) => item.genreID.genreName === "sci fi"),
+//     },
 //     {
 //         title: "Thriller",
-//         data: films.filter((item) => item.genre === "thriller"),
+//         data: films.filter((item) => item.genreID.genreName === "thriller"),
+//     },
+//     {   title: "TV Movie",
+//         data: films.filter((item) => item.genreID.genreName === "TV movie") },
+//     {
+//         title: "War",
+//         data: films.filter((item) => item.genreID.genreName === "war"),
 //     },
 //     {
-//         title: "Children",
-//         data: films.filter((item) => item.genre === "children"),
-//     },
-//     {
-//         title: "Suspense",
-//         data: films.filter((item) => item.genre === "suspense"),
-//     },
-//     {
-//         title: "Romance",
-//         data: films.filter((item) => item.genre === "romance"),
-//     },
+//         title: "Western",
+//         data: films.filter((item) => item.genreID.genreName === "western"),
+//     }
 // ];
 
 const [category, setCategory] = useState("films");
-// const currentCategory = category === "films" ? films : series;
+const currentCategory = category === "films";
 const [showCardFeature, setShowCardFeature] = useState(false);
 const [activeItem, setActiveItem] = useState(false);
 const [showPlayer, setShowPlayer] = useState(false);
@@ -58,10 +106,10 @@ return (
             <NavBar className="navbar-browse">
                 <Logo />
                 <HeaderLink
-                    // className={
-                    //     category === "films" ? "header-link-bold" : "header-link"
-                    // }
-                    // onClick={() => setCategory("films")}
+                    className={
+                        category === "films" ? "header-link-bold" : "header-link"
+                    }
+                    onClick={() => setCategory("films")}
                 >
                     Films
                 </HeaderLink>
@@ -86,46 +134,46 @@ return (
             </FeatureWrapper>
         </HeaderWrapper>
 
-        <AllSlidesWrapper>
-            {/*{currentCategory.map((slideItem) => (*/}
-            {/*    <SlideWrapper key={`${category}-${slideItem.title.toLowerCase()}`}>*/}
-            {/*        <SlideTitle>{slideItem.title}</SlideTitle>*/}
-            {/*        <AllCardsWrapper>*/}
-            {/*            {slideItem.data.map((cardItem) => (*/}
-            {/*                <CardWrapper key={cardItem.docId}>*/}
-            {/*                    <CardImage*/}
-            {/*                        onClick={() => {*/}
-            {/*                            setShowCardFeature(true);*/}
-            {/*                            setActiveItem(cardItem);*/}
-            {/*                        }}*/}
-            {/*                        src={`../images/${category}/${cardItem.genre}/${cardItem.slug}/small.jpg`}*/}
-            {/*                    />*/}
-            {/*                </CardWrapper>*/}
-            {/*            ))}*/}
-            {/*        </AllCardsWrapper>*/}
-            {/*        {showCardFeature &&*/}
-            {/*        slideItem.title.toLowerCase() === activeItem.genre ? (*/}
-            {/*            <CardFeatureWrapper*/}
-            {/*                style={{*/}
-            {/*                    backgroundImage: `url(../images/${category}/${activeItem.genre}/${activeItem.slug}/large.jpg)`,*/}
-            {/*                }}*/}
-            {/*            >*/}
-            {/*                <CardTitle>{activeItem.title}</CardTitle>*/}
-            {/*                <CardDescription>{activeItem.description}</CardDescription>*/}
-            {/*                <CardFeatureClose onClick={() => setShowCardFeature(false)} />*/}
-            {/*                <PlayButton onClick={() => setShowPlayer(true)}>*/}
-            {/*                    Play*/}
-            {/*                </PlayButton>*/}
-            {/*                {showPlayer ? (*/}
-            {/*                    <PlayerOverlay onClick={() => setShowPlayer(false)}>*/}
-            {/*                        <PlayerVideo src="../videos/video.mp4" type="video/mp4" />*/}
-            {/*                    </PlayerOverlay>*/}
-            {/*                ) : null}*/}
-            {/*            </CardFeatureWrapper>*/}
-            {/*        ) : null}*/}
-            {/*    </SlideWrapper>*/}
-            {/*))}*/}
-        </AllSlidesWrapper>
+        {/*<AllSlidesWrapper>*/}
+        {/*    {currentCategory.map((slideItem) => (*/}
+        {/*        <SlideWrapper key={`${category}-${slideItem.title.toLowerCase()}`}>*/}
+        {/*            <SlideTitle>{slideItem.title}</SlideTitle>*/}
+        {/*            <AllCardsWrapper>*/}
+        {/*                {slideItem.data.map((cardItem) => (*/}
+        {/*                    <CardWrapper key={cardItem.docId}>*/}
+        {/*                        <CardImage*/}
+        {/*                            onClick={() => {*/}
+        {/*                                setShowCardFeature(true);*/}
+        {/*                                setActiveItem(cardItem);*/}
+        {/*                            }}*/}
+        {/*                            src={`../images/${category}/${cardItem.genre}/${cardItem.slug}/small.jpg`}*/}
+        {/*                        />*/}
+        {/*                    </CardWrapper>*/}
+        {/*                ))}*/}
+        {/*            </AllCardsWrapper>*/}
+        {/*            {showCardFeature &&*/}
+        {/*            slideItem.title.toLowerCase() === activeItem.genre ? (*/}
+        {/*                <CardFeatureWrapper*/}
+        {/*                    style={{*/}
+        {/*                        backgroundImage: `url(../images/${category}/${activeItem.genre}/${activeItem.slug}/large.jpg)`,*/}
+        {/*                    }}*/}
+        {/*                >*/}
+        {/*                    <CardTitle>{activeItem.title}</CardTitle>*/}
+        {/*                    <CardDescription>{activeItem.description}</CardDescription>*/}
+        {/*                    <CardFeatureClose onClick={() => setShowCardFeature(false)} />*/}
+        {/*                    <PlayButton onClick={() => setShowPlayer(true)}>*/}
+        {/*                        Play*/}
+        {/*                    </PlayButton>*/}
+        {/*                    {showPlayer ? (*/}
+        {/*                        <PlayerOverlay onClick={() => setShowPlayer(false)}>*/}
+        {/*                            <PlayerVideo src="../videos/video.mp4" type="video/mp4" />*/}
+        {/*                        </PlayerOverlay>*/}
+        {/*                    ) : null}*/}
+        {/*                </CardFeatureWrapper>*/}
+        {/*            ) : null}*/}
+        {/*        </SlideWrapper>*/}
+        {/*    ))}*/}
+        {/*</AllSlidesWrapper>*/}
         <FooterCompound />
     </>
 );
