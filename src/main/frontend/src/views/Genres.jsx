@@ -1,8 +1,8 @@
 import NavBar from "../components/Header/NavBar.jsx";
 import Logo from "../components/Header/Logo.jsx";
 import HeaderLink from "../components/Header/HeaderLink.jsx";
-import React, {useState} from "@types/react";
 import HeaderWrapper from "../components/Header/HeaderWrapper.jsx";
+import {useState} from "react";
 
 function Genres() {
 	const [category, setCategory] = useState("films");

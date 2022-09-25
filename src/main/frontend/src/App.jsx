@@ -11,7 +11,7 @@ function App() {
           <Router exact path="/">
             <Home></Home>
           </Router>
-          <Router path="/genre">
+          <Router exact path="/genre">
             <Genres></Genres>
           </Router>
         </Switch>
