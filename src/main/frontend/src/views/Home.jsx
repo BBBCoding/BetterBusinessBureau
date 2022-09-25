@@ -26,83 +26,84 @@ import YoutubeLinkFixer from "../youtubeLinkFixer.js"
 function Home() {
 
     const {data: films, isPending, error} = Fetch("http://localhost:8080/api/v1/movies");
-
+    console.log(films ?? "cant't find films");
     if (!isPending) {
         let movies = [
             {
                 title: "Action",
-                data: films.filter((item) => item.genreID.genreName === "action")
+                data: films?.filter((item) => item.genreID[0]?.genreName === "action")
             },
             {
                 title: "Adventure",
-                data: films.filter((item) => item.genreID.genreName === "adventure"),
+                data: films?.filter((item) => item.genreID.genreName === "adventure"),
             },
             {
                 title: "Animated",
-                data: films.filter((item) => item.genreID.genreName === "animated"),
+                data: films?.filter((item) => item.genreID.genreName === "animated"),
             },
             {
                 title: "Comedy",
-                data: films.filter((item) => item.genreID.genreName === "comedy"),
+                data: films?.filter((item) => item.genreID.genreName === "comedy"),
             },
             {
                 title: "Crime",
-                data: films.filter((item) => item.genreID.genreName === "crime"),
-            },
-            {
-                title: "Documentary",
-                data: films.filter((item) => item.genreID.genreName === "documentary")
-            },
-            {
-                title: "Drama",
-                data: films.filter((item) => item.genreID.genreName === "drama"),
-            },
-            {
-                title: "Family",
-                data: films.filter((item) => item.genreID.genreName === "family"),
-            },
-            {
-                title: "Fantasy",
-                data: films.filter((item) => item.genreID.genreName === "fantasy"),
-            },
-            {
-                title: "History",
-                data: films.filter((item) => item.genreID.genreName === "history"),
-            },
-            {
-                title: "Horror",
-                data: films.filter((item) => item.genreID.genreName === "horror")
-            },
-            {
-                title: "Music",
-                data: films.filter((item) => item.genreID.genreName === "music"),
-            },
-            {
-                title: "Mystery",
-                data: films.filter((item) => item.genreID.genreName === "mystery"),
-            },
-            {
-                title: "Sci-Fi",
-                data: films.filter((item) => item.genreID.genreName === "sci fi"),
-            },
-            {
-                title: "Thriller",
-                data: films.filter((item) => item.genreID.genreName === "thriller"),
-            },
-            {
-                title: "TV Movie",
-                data: films.filter((item) => item.genreID.genreName === "TV movie")
-            },
-            {
-                title: "War",
-                data: films.filter((item) => item.genreID.genreName === "war"),
-            },
-            {
-                title: "Western",
-                data: films.filter((item) => item.genreID.genreName === "western"),
+                data: films?.filter((item) => item.genreID.genreName === "crime"),
             }
+            // ,
+            // {
+            //     title: "Documentary",
+            //     data: films.filter((item) => item.genreID.genreName === "documentary")
+            // },
+            // {
+            //     title: "Drama",
+            //     data: films.filter((item) => item.genreID.genreName === "drama"),
+            // },
+            // {
+            //     title: "Family",
+            //     data: films.filter((item) => item.genreID.genreName === "family"),
+            // },
+            // {
+            //     title: "Fantasy",
+            //     data: films.filter((item) => item.genreID.genreName === "fantasy"),
+            // },
+            // {
+            //     title: "History",
+            //     data: films.filter((item) => item.genreID.genreName === "history"),
+            // },
+            // {
+            //     title: "Horror",
+            //     data: films.filter((item) => item.genreID.genreName === "horror")
+            // },
+            // {
+            //     title: "Music",
+            //     data: films.filter((item) => item.genreID.genreName === "music"),
+            // },
+            // {
+            //     title: "Mystery",
+            //     data: films.filter((item) => item.genreID.genreName === "mystery"),
+            // },
+            // {
+            //     title: "Sci-Fi",
+            //     data: films.filter((item) => item.genreID.genreName === "sci fi"),
+            // },
+            // {
+            //     title: "Thriller",
+            //     data: films.filter((item) => item.genreID.genreName === "thriller"),
+            // },
+            // {
+            //     title: "TV Movie",
+            //     data: films.filter((item) => item.genreID.genreName === "TV movie")
+            // },
+            // {
+            //     title: "War",
+            //     data: films.filter((item) => item.genreID.genreName === "war"),
+            // },
+            // {
+            //     title: "Western",
+            //     data: films.filter((item) => item.genreID.genreName === "western"),
+            // }
         ];
-        console.log(movies);
+        console.log(movies ?? "Loading...");
     }
 
 
