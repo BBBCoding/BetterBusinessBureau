@@ -45,13 +45,13 @@ public class MoviesController {
     }
 
     @PostMapping
-    public ResponseEntity<Movie> createOrUpdateEmployee(Movie movie) {
+    public ResponseEntity<Movie> createOrUpdateMovie(Movie movie) {
         Movie updated = service.createOrUpdateMovie(movie);
         return new ResponseEntity<>(updated, new HttpHeaders(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public HttpStatus deleteEmployeeById(@PathVariable("id") Long id)
+    public HttpStatus deleteMovieById(@PathVariable("id") Long id)
             throws RecordNotFoundException {
         service.deleteMovieById(id);
         return HttpStatus.FORBIDDEN;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Fetch from "../custom-hooks/useFetch.jsx";
 import HeaderWrapper from "../components/Header/HeaderWrapper.jsx";
 import NavBar from "../components/Header/NavBar.jsx";
@@ -24,28 +24,45 @@ import CardTitle from "../components/Movies/CardTitle.jsx";
 import CardDescription from "../components/Movies/CardDescription.jsx";
 import CardFeatureClose from "../components/Movies/CardFeatureClose.jsx";
 import SlideTitle from "../components/Movies/SlideTitle.jsx";
+
 function Home() {
     const {data: films, isPending, error} = Fetch("http://localhost:8080/api/v1/movies");
     console.log(films ?? "cannot find films");
     let movies = Movies;
-    films?.forEach(film => {
-        if (film.genreID?.length === 0) {
-            movies[17].data.push(film);
-        }
-        film.genreID?.forEach(genre => {
-            movies.forEach(movie => {
-                if (genre.genreName === movie.title.toLowerCase()) {
-                    movie.data.push(film);
+    let count = 0;
+    if (movies[0].data.length === 0) {
+        films?.forEach(film => {
+            if (film.genreID?.length === 0) {
+                movies[18].data.push(film);
+            }
+            film.genreID?.forEach(genre => {
+                movies.forEach(movie => {
+                    if (genre.genreName === movie.title.toLowerCase()) {
+                        movie.data.push(film);
+                    }
+                });
+            })
+        });
+        movies.forEach(movie => {
+            movie.data.forEach(film => {
+                film.media.trailer_path = YoutubeLinkFixer(film.media.trailer_path);
+            })
+        });
+    }
+    function getMoviePosterByGenre() {
+        let movieArray = [];
+        let genre = ["action", "adventure", "animated", "comedy", "crime", "documentary", "drama", "family", "fantasy", "history", "horror", "music", "mystery", "sci-fi", "tv movie", "thriller", "war", "western", "null"];
+        for (let i = 0; i < genre.length; i++) {
+            for (let j = 0; j < movies.length; j++) {
+                if (genre[i] === movies[j].title.toLowerCase()) {
+                        movieArray.push(movies[j].data);
                 }
-            });
-        })
-    });
-    movies.forEach(movie => {
-        movie.data.forEach(film => {
-            film.media.trailer_path = YoutubeLinkFixer(film.media.trailer_path);
-        })
-    });
+            }
+        }
+        return movieArray;
+    }
 
+    console.log(getMoviePosterByGenre());
     const [showCardFeature, setShowCardFeature] = useState(false); // not sure
     const [activeItem, setActiveItem] = useState(false); // set when active card is selected
     const [showPlayer, setShowPlayer] = useState(false); // eventually checks if there is a trailer and plays it if available
@@ -87,20 +104,19 @@ function Home() {
             </HeaderWrapper>
             <AllSlidesWrapper>
               {movies?.map((slideItem) => (
-               // making a new array to have every genre
             	  <SlideWrapper key={`${ slideItem.data.title }-${ slideItem.data.id }`}>
             		  <SlideTitle>{ slideItem.title }</SlideTitle>
             		  <AllCardsWrapper>
             			  {films?.map((cardItem) => (
-                              <CardWrapper key={`${ cardItem.title }-${ cardItem.id }`}>
-            					  <CardImage
+                              <CardWrapper key={`${ slideItem?.title }-${ cardItem.id }`}>
+                                  <CardImage
             						  onClick={() => {
             							  setShowCardFeature(true);
-            							  setActiveItem(cardItem); // sets active item to the movie clicked
+            							  setActiveItem(cardItem);
             						  }}
-            						  src={ cardItem.poster === null ? "https://via.placeholder.com/150" : cardItem.poster.poster_path }
+                                      src={ cardItem.poster?.backdrop_path ?? "https://via.placeholder.com/450" }
             					  />
-            				  </CardWrapper>
+                              </CardWrapper>
             			  ))}
             		  </AllCardsWrapper>
             		  {showCardFeature && slideItem?.title.toLowerCase() === activeItem.title ? (

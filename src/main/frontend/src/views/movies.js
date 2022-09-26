@@ -1,5 +1,9 @@
 let movies = [
 	{
+		title: "Action",
+		data: []
+	},
+	{
 		title: "Adventure",
 		data: []
 	},
