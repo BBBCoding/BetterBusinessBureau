@@ -37,7 +37,7 @@ public class MoviesController {
             return new ResponseEntity<>(list, new HttpHeaders(), HttpStatus.OK);
         }
     @GetMapping("/{id}")
-    public ResponseEntity<Movie> getEmployeeById(@PathVariable("id") Long id)
+    public ResponseEntity<Movie> getMovieById(@PathVariable("id") Long id)
             throws RecordNotFoundException {
         Movie entity = service.getMovieById(id);
 

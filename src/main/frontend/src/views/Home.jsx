@@ -14,7 +14,17 @@ import YoutubeLinkFixer from "../youtubeLinkFixer.js"
 import Movies from "./movies.js";
 import PlayerWrapper from "../components/Movies/PlayerWrapper.jsx";
 import {Link} from "react-router-dom";
-import Curosel from "../components/Curosel/Curosel.jsx";
+import Carousel from "../components/Carousel/Carousel.jsx";
+import AllSlidesWrapper from "../components/Movies/AllSlidesWrapper.jsx";
+import SlideWrapper from "../components/Movies/SlideWrapper.jsx";
+import AllCardsWrapper from "../components/Movies/AllCardsWrapper.jsx";
+import CardWrapper from "../components/Movies/CardWrapper.jsx";
+import CardImage from "../components/Movies/CardImage.jsx";
+import CardFeatureWrapper from "../components/Movies/CardFeatureWrapper.jsx";
+import CardTitle from "../components/Movies/CardTitle.jsx";
+import CardDescription from "../components/Movies/CardDescription.jsx";
+import CardFeatureClose from "../components/Movies/CardFeatureClose.jsx";
+import SlideTitle from "../components/Movies/SlideTitle.jsx";
 function Home() {
     const {data: films, isPending, error} = Fetch("http://localhost:8080/api/v1/movies");
     // console.log(films ?? "cannot find films");
@@ -38,6 +48,7 @@ function Home() {
         })
     });
 
+    const [category, setCategory] = useState("movies"); // baseline category
     const [showCardFeature, setShowCardFeature] = useState(false); // not sure
     const [activeItem, setActiveItem] = useState(false); // set when active card is selected
     const [showPlayer, setShowPlayer] = useState(false); // eventually checks if there is a trailer and plays it if available
@@ -78,9 +89,42 @@ function Home() {
                     </PlayerWrapper>
                 </FeatureWrapper>
             </HeaderWrapper>
-            <Curosel className="carousel">
+            <AllSlidesWrapper>
+              {films?.map((slideItem) => ( // making a new array to have every genre
 
-            </Curosel>
+            	  <SlideWrapper key={`${slideItem.data?.title}-${slideItem.data?.id}`}>
+            		  <SlideTitle>{ slideItem.title }</SlideTitle> // title of genre
+            		  <AllCardsWrapper>
+            			  {slideItem.data?.map((cardItem) => (
+                              <CardWrapper key={`${slideItem.data?.title}-${cardItem.title}`}>
+            					  <CardImage
+            						  onClick={() => {
+            							  setShowCardFeature(true);
+            							  setActiveItem(cardItem); // sets active item to the movie clicked
+            						  }}
+            						  src={ cardItem.poster?.poster_path !== "" ? cardItem.poster.poster_path : ""} // image of movie, set to equivalent of movies.data[i].media.poster_path
+            					  />
+            				  </CardWrapper>
+            			  ))}
+            		  </AllCardsWrapper>
+            		  {showCardFeature &&
+            		  slideItem?.data.title.toLowerCase() === activeItem.title ? ( // if the active item is in the current genre
+            			  <CardFeatureWrapper
+            				  style={{backgroundImage: activeItem.poster.backdrop_path }}// image of movie, set to equivalent of movies.data[i].media.backdrop_path
+            			  >
+            				  <CardTitle>{ activeItem.title }</CardTitle> // title of movie
+            				  <CardDescription>{ activeItem.plot }</CardDescription> // plot of movie
+            				  <CardFeatureClose onClick={() => setShowCardFeature(false)} /> // close button
+            				  {showPlayer ? (
+            					  <PlayerOverlay onClick={() => setShowPlayer(false)}>
+            						  <PlayerVideo src={ activeItem.data.media.trailer_path } />
+            					  </PlayerOverlay>
+            				  ) : null} // if showPlayer is true, show the video player
+            			  </CardFeatureWrapper>
+            		  ) : null} // if the active item is not in the current genre, do not show the card feature
+            	  </SlideWrapper>
+              ))}
+            </AllSlidesWrapper>
             <FooterCompound />
         </>
     );
