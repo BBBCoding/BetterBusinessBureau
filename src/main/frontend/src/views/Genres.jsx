@@ -2,7 +2,8 @@ import NavBar from "../components/Header/NavBar.jsx";
 import Logo from "../components/Header/Logo.jsx";
 import HeaderLink from "../components/Header/HeaderLink.jsx";
 import HeaderWrapper from "../components/Header/HeaderWrapper.jsx";
-import {useState} from "react";
+import React, {useState} from "react";
+import {Link} from "react-router-dom";
 
 function Genres() {
 	const [category, setCategory] = useState("films");
@@ -16,21 +17,15 @@ function Genres() {
 	  <HeaderWrapper className="header-wrapper-browse">
 		  <NavBar className="navbar-browse">
 			  <Logo />
-			  <HeaderLink
-				  className={
-					  category === "films" ? "header-link-bold" : "header-link"
-				  }
-				  onClick={() => setCategory("films")}
-			  >
-				  Films
+			  <HeaderLink  className= { category === "films" ? "header-link-bold" : "header-link"} onClick={() => setCategory("films")} >
+				  <Link to="/">
+					  Films
+				  </Link>
 			  </HeaderLink>
-			  <HeaderLink
-				  className={
-					  category === "genres" ? "header-link-bold" : "header-link"
-				  }
-				  onClick={() => setCategory("genres")}
-			  >
-				  Genres
+			  <HeaderLink className= { category === "genres" ? "header-link-bold" : "header-link"} onClick={() => setCategory("genres")} >
+				  <Link to="/genres">
+					  Genres
+				  </Link>
 			  </HeaderLink>
 		  </NavBar>
 	  </HeaderWrapper>

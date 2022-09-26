@@ -3,7 +3,6 @@
   text-align: center;
   height: 80vh;
 }
-
 .feature-title-home,
 .feature-title-browse {
   color: white;
@@ -13,21 +12,17 @@
   margin: auto;
   background: transparent;
 }
-
-
 .feature-title-browse {
   line-height: normal;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.45);
   margin:  5vh;
 }
-
 @media (max-width: 550px) {
   .feature-title-home,
   .feature-title-browse {
     font-size: 30px;
   }
 }
-
 .feature-subtitle-home,
 .feature-subtitle-browse {
   color: white;
