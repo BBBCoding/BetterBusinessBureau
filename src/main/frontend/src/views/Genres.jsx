@@ -31,15 +31,11 @@ function Genres() {
 	  <HeaderWrapper className="header-wrapper-browse">
 		  <NavBar className="navbar-browse">
 			  <Logo />
-			  <HeaderLink  className= { category === "home" ? "header-link-bold" : "header-link"} onClick={() => setCategory("home")} >
-				  <Link to="/">
+			  <HeaderLink  href="/" className= { category === "home" ? "header-link-bold" : "header-link"} onClick={() => setCategory("home")} >
 					  Home
-				  </Link>
 			  </HeaderLink>
-			  <HeaderLink className= { category === "genres" ? "header-link" : "header-link-bold"} onClick={() => setCategory("genres")} >
-				  <Link to="/genres">
+			  <HeaderLink href="/genres" className= { category === "genres" ? "header-link" : "header-link-bold"} onClick={() => setCategory("genres")} >
 					  Genres
-				  </Link>
 			  </HeaderLink>
 		  </NavBar>
 	  </HeaderWrapper>

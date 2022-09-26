@@ -81,20 +81,16 @@ function Home() {
             <HeaderWrapper className="header-wrapper-browse">
                 <NavBar className="navbar-browse">
                     <Logo />
-                    <HeaderLink  className= {"home" ? "header-link-bold" : "header-link"}>
-                        <Link to="/">
+                    <HeaderLink  href="/" className= {"home" ? "header-link-bold" : "header-link"}>
                             Home
-                        </Link>
                     </HeaderLink>
-                    <HeaderLink className= {"genres" ? "header-link" : "header-link-bold"}>
-                        <Link to="/genres">
+                    <HeaderLink href="/genres" className= {"genres" ? "header-link" : "header-link-bold"}>
                             Genres
-                        </Link>
                     </HeaderLink>
                 </NavBar>
                 <FeatureWrapper>
                     <PlayerOverlay>
-                        <PlayerVideo src={ movies[0].data[showCase]?.media.trailer_path }>
+                        <PlayerVideo src={ movies[0].data[showCase]?.media.trailer_path ?? movies[0].data[0]?.media.trailer_path }>
                         </PlayerVideo>
                     </PlayerOverlay>
                     <PlayerWrapper>
@@ -102,11 +98,11 @@ function Home() {
                             Watch&nbsp;
                             { error && <div>{ error }</div> }
                             { isPending && <div>Loading...</div> }
-                            { movies[0].data[showCase]?.title }
+                            { movies[0].data[showCase]?.title ?? movies[0].data[0]?.title }
                             &nbsp;Now
                         </FeatureTitle>
                         <FeatureSubTitle className="feature-subtitle-browse">
-                            { movies[0].data[showCase]?.plot }
+                            { movies[0].data[showCase]?.plot ?? movies[0].data[0]?.plot }
                         </FeatureSubTitle>
                     </PlayerWrapper>
                 </FeatureWrapper>
@@ -119,12 +115,11 @@ function Home() {
                             { !isPending && movies?.map((cardItem) => (
                                 <CardWrapper key={`${ cardItem.title ?? Math.random()}-${cardItem.data.id ?? Math.random()}`}>
                                     <CardImage
-                                        key={`${ cardItem.title ?? Math.random()}-${cardItem.data.id ?? Math.random()}`}
                                         onClick={() => {
                                             setShowCardFeature(true);
                                             setActiveItem(cardItem);
                                         }}
-                                        src={ cardItem.data[0]?.poster?.backdrop_path ?? "https://via.placeholder.com/450" }
+                                        src={ cardItem.data[0]?.poster?.backdrop_path ?? "https://via.placeholder.com/450"}
                                     />
                                 </CardWrapper>
                             ))}
