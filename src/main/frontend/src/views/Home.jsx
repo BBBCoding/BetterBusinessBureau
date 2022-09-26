@@ -50,23 +50,32 @@ function Home() {
         });
     }
     function getMoviePosterByGenre() {
-        let movieArray = [];
+
         let genre = ["action", "adventure", "animated", "comedy", "crime", "documentary", "drama", "family", "fantasy", "history", "horror", "music", "mystery", "sci-fi", "tv movie", "thriller", "war", "western", "null"];
         for (let i = 0; i < genre.length; i++) {
             for (let j = 0; j < movies.length; j++) {
                 if (genre[i] === movies[j].title.toLowerCase()) {
-                    movieArray.push(movies[j].data);
+                   return movies[j].data;
                 }
             }
         }
-        return movieArray;
     }
-
-    console.log(getMoviePosterByGenre());
+    function getBackdropPath(data) {
+        let backdropPath = [];
+        data?.forEach(film => {
+            if (film.poster === null) {
+                backdropPath.push("https://via.placeholder.com/450")
+            } else {
+                backdropPath.push(film.poster.backdrop_path);
+            }
+        });
+        return backdropPath;
+    }
+    console.log(movies);
     const [showCardFeature, setShowCardFeature] = useState(false); // not sure
     const [activeItem, setActiveItem] = useState(false); // set when active card is selected
     const [showPlayer, setShowPlayer] = useState(false); // eventually checks if there is a trailer and plays it if available
-
+    const showCase = (Math.round(Math.random() * films?.length));
     return (
         <>
             <HeaderWrapper className="header-wrapper-browse">
@@ -85,7 +94,7 @@ function Home() {
                 </NavBar>
                 <FeatureWrapper>
                     <PlayerOverlay>
-                        <PlayerVideo src={ movies[0].data[0]?.media.trailer_path }>
+                        <PlayerVideo src={ movies[0].data[showCase]?.media.trailer_path }>
                         </PlayerVideo>
                     </PlayerOverlay>
                     <PlayerWrapper>
@@ -93,11 +102,11 @@ function Home() {
                             Watch&nbsp;
                             { error && <div>{ error }</div> }
                             { isPending && <div>Loading...</div> }
-                            { movies[0].data[0]?.title }
+                            { movies[0].data[showCase]?.title }
                             &nbsp;Now
                         </FeatureTitle>
                         <FeatureSubTitle className="feature-subtitle-browse">
-                            { movies[0].data[0]?.plot }
+                            { movies[0].data[showCase]?.plot }
                         </FeatureSubTitle>
                     </PlayerWrapper>
                 </FeatureWrapper>
@@ -107,14 +116,15 @@ function Home() {
                     <SlideWrapper key={`${ slideItem.title ?? Math.random()}`}>
                         <SlideTitle>{ slideItem.title }</SlideTitle>
                         <AllCardsWrapper>
-                            {getMoviePosterByGenre()?.map((cardItem) => (
-                                <CardWrapper key={`${ slideItem.title ?? Math.random()}-${slideItem.data.id ?? Math.random()}`}>
+                            { !isPending && movies?.map((cardItem) => (
+                                <CardWrapper key={`${ cardItem.title ?? Math.random()}-${cardItem.data.id ?? Math.random()}`}>
                                     <CardImage
+                                        key={`${ cardItem.title ?? Math.random()}-${cardItem.data.id ?? Math.random()}`}
                                         onClick={() => {
                                             setShowCardFeature(true);
                                             setActiveItem(cardItem);
                                         }}
-                                        src={ cardItem.poster?.backdrop_path ?? "https://via.placeholder.com/450" }
+                                        src={ cardItem.data[0]?.poster?.backdrop_path ?? "https://via.placeholder.com/450" }
                                     />
                                 </CardWrapper>
                             ))}
