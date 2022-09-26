@@ -1,4 +1,3 @@
-import React from "react";
 import "./MoviesStyles.css";
 
 function PlayerOverlay({ children, ...restProps }) {
