@@ -2,10 +2,9 @@ import React from "react";
 import "./MoviesStyles.css";
 
 function PlayerVideo({ children, ...restProps }) {
+  console.log(restProps)
   return (
-    <video className="player-video" controls {...restProps}>
-      <source {...restProps} />
-    </video>
+        <iframe className="frame" src={restProps.src} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
   );
 }
 

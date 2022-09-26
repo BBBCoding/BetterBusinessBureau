@@ -46,8 +46,7 @@ function Home() {
             film.media.trailer_path = YoutubeLinkFixer(film.media.trailer_path);
         })
     });
-    console.log(movies ?? "cannot find movies");
-console.log(movies[0].data[1]?.title ?? "has no data yet");
+
     const [category, setCategory] = useState("films");
     const currentCategory = category === "films";
     const [showCardFeature, setShowCardFeature] = useState(false);
@@ -88,7 +87,10 @@ console.log(movies[0].data[1]?.title ?? "has no data yet");
                         { movies[0].data[0]?.plot }
                     </FeatureSubTitle>
                     <PlayButton onClick={() => setShowPlayer(true)}>Play</PlayButton>
-                    { movies[0].data[0]?.media.trailer_path }
+                    <PlayerOverlay>
+                        <PlayerVideo src={ movies[0].data[0]?.media.trailer_path }>
+                        </PlayerVideo>
+                    </PlayerOverlay>
                 </FeatureWrapper>
             </HeaderWrapper>
 
