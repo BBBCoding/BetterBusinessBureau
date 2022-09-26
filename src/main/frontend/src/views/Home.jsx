@@ -27,9 +27,8 @@ import CardFeatureClose from "../components/Movies/CardFeatureClose.jsx";
 import SlideTitle from "../components/Movies/SlideTitle.jsx";
 function Home() {
     const {data: films, isPending, error} = Fetch("http://localhost:8080/api/v1/movies");
-    // console.log(films ?? "cannot find films");
+    console.log(films ?? "cannot find films");
     let movies = Movies;
-
     films?.forEach(film => {
         if (film.genreID?.length === 0) {
             movies[17].data.push(film);
@@ -90,25 +89,24 @@ function Home() {
                 </FeatureWrapper>
             </HeaderWrapper>
             <AllSlidesWrapper>
-              {films?.map((slideItem) => ( // making a new array to have every genre
-
-            	  <SlideWrapper key={`${slideItem.data?.title}-${slideItem.data?.id}`}>
-            		  <SlideTitle>{ slideItem.title }</SlideTitle> // title of genre
+              {films?.map((slideItem) => (
+               // making a new array to have every genre
+            	  <SlideWrapper key={`${slideItem.title}-${slideItem.id}`}>
+            		  <SlideTitle>{ slideItem.title }</SlideTitle>
             		  <AllCardsWrapper>
-            			  {slideItem.data?.map((cardItem) => (
-                              <CardWrapper key={`${slideItem.data?.title}-${cardItem.title}`}>
+            			  {films?.map((cardItem) => (
+                              <CardWrapper key={`${cardItem.title}-${cardItem.id}`}>
             					  <CardImage
             						  onClick={() => {
             							  setShowCardFeature(true);
             							  setActiveItem(cardItem); // sets active item to the movie clicked
             						  }}
-            						  src={ cardItem.poster?.poster_path !== "" ? cardItem.poster.poster_path : ""} // image of movie, set to equivalent of movies.data[i].media.poster_path
+            						  src={ cardItem.poster === null ? "https://via.placeholder.com/150" : cardItem.poster.poster_path }
             					  />
             				  </CardWrapper>
             			  ))}
             		  </AllCardsWrapper>
-            		  {showCardFeature &&
-            		  slideItem?.data.title.toLowerCase() === activeItem.title ? ( // if the active item is in the current genre
+            		  {showCardFeature && slideItem?.title.toLowerCase() === activeItem.title ? ( // if the active item is in the current genre
             			  <CardFeatureWrapper
             				  style={{backgroundImage: activeItem.poster.backdrop_path }}// image of movie, set to equivalent of movies.data[i].media.backdrop_path
             			  >
@@ -117,7 +115,7 @@ function Home() {
             				  <CardFeatureClose onClick={() => setShowCardFeature(false)} /> // close button
             				  {showPlayer ? (
             					  <PlayerOverlay onClick={() => setShowPlayer(false)}>
-            						  <PlayerVideo src={ activeItem.data.media.trailer_path } />
+            						  <PlayerVideo src={ activeItem.media.trailer_path } />
             					  </PlayerOverlay>
             				  ) : null} // if showPlayer is true, show the video player
             			  </CardFeatureWrapper>
