@@ -29,7 +29,7 @@ function Home() {
     const {data: films, isPending, error} = Fetch("http://localhost:8080/api/v1/movies");
     console.log(films ?? "cannot find films");
     let movies = Movies;
-    let count = 0;
+
     if (movies[0].data.length === 0) {
         films?.forEach(film => {
             if (film.genreID?.length === 0) {
@@ -49,33 +49,14 @@ function Home() {
             })
         });
     }
-    function getMoviePosterByGenre() {
 
-        let genre = ["action", "adventure", "animated", "comedy", "crime", "documentary", "drama", "family", "fantasy", "history", "horror", "music", "mystery", "sci-fi", "tv movie", "thriller", "war", "western", "null"];
-        for (let i = 0; i < genre.length; i++) {
-            for (let j = 0; j < movies.length; j++) {
-                if (genre[i] === movies[j].title.toLowerCase()) {
-                   return movies[j].data;
-                }
-            }
-        }
-    }
-    function getBackdropPath(data) {
-        let backdropPath = [];
-        data?.forEach(film => {
-            if (film.poster === null) {
-                backdropPath.push("https://via.placeholder.com/450")
-            } else {
-                backdropPath.push(film.poster.backdrop_path);
-            }
-        });
-        return backdropPath;
-    }
-    console.log(movies);
+
+
     const [showCardFeature, setShowCardFeature] = useState(false); // not sure
     const [activeItem, setActiveItem] = useState(false); // set when active card is selected
     const [showPlayer, setShowPlayer] = useState(false); // eventually checks if there is a trailer and plays it if available
     const showCase = (Math.round(Math.random() * films?.length));
+
     return (
         <>
             <HeaderWrapper className="header-wrapper-browse">
@@ -108,23 +89,24 @@ function Home() {
                 </FeatureWrapper>
             </HeaderWrapper>
             <AllSlidesWrapper>
-                {movies?.map((slideItem) => (
-                    <SlideWrapper key={`${ slideItem.title ?? Math.random()}`}>
+                {movies?.map((slideItem, index) => (
+                    <SlideWrapper key={`${ index ?? Math.random()}`}>
                         <SlideTitle>{ slideItem.title }</SlideTitle>
                         <AllCardsWrapper>
-                            { !isPending && movies?.map((cardItem) => (
-                                <CardWrapper key={`${ cardItem.title ?? Math.random()}-${cardItem.data.id ?? Math.random()}`}>
+                            { !isPending && slideItem.data?.map((cardItem, index) => (
+                                <CardWrapper key={`${ index ?? Math.random()}`}>
                                     <CardImage
                                         onClick={() => {
                                             setShowCardFeature(true);
                                             setActiveItem(cardItem);
                                         }}
-                                        src={ cardItem.data[0]?.poster?.backdrop_path ?? "https://via.placeholder.com/450"}
+                                        src={ cardItem.poster?.backdrop_path ?? "https://via.placeholder.com/450"}
                                     />
                                 </CardWrapper>
-                            ))}
+                                ))}
                         </AllCardsWrapper>
-                        {showCardFeature && slideItem?.title.toLowerCase() === activeItem.title ? (
+
+                        {showCardFeature && cardItem?.title.toLowerCase() === activeItem.title ? (
                             <CardFeatureWrapper
                                 style={{ backgroundImage: activeItem.poster.backdrop_path }}
                             >
