@@ -48,11 +48,11 @@ function Home() {
         })
     });
 
-    const [category, setCategory] = useState("films");
-    const currentCategory = category === "films";
-    const [showCardFeature, setShowCardFeature] = useState(false);
-    const [activeItem, setActiveItem] = useState(false);
-    const [showPlayer, setShowPlayer] = useState(false);
+    const [category, setCategory] = useState("movies"); // baseline category
+    const currentCategory = category === movies.forEach(movie => {movie.title}) ? category : movies[0].title; // check if current category is movies or sets category to Action
+    const [showCardFeature, setShowCardFeature] = useState(false); // not sure
+    const [activeItem, setActiveItem] = useState(false); // set when active card is selected
+    const [showPlayer, setShowPlayer] = useState(false); // eventually checks if there is a trailer and plays it if available
 
     return (
         <>
@@ -63,7 +63,7 @@ function Home() {
                         className={
                             category === "films" ? "header-link-bold" : "header-link"
                         }
-                        onClick={() => setCategory("films")}
+                        onClick={() => setCategory("films")} // still need to add bom redirect
                     >
                         Films
                     </HeaderLink>
@@ -71,12 +71,12 @@ function Home() {
                         className={
                             category === "genres" ? "header-link-bold" : "header-link"
                         }
-                        onClick={() => setCategory("genres")}
+                        onClick={() => setCategory("genres")} // still need to add bom redirect
                     >
                         Genres
                     </HeaderLink>
                 </NavBar>
-                <FeatureWrapper>
+                <FeatureWrapper> // I think this part is done
                     <PlayerOverlay>
                         <PlayerVideo src={ movies[0].data[0]?.media.trailer_path }>
                         </PlayerVideo>
@@ -96,46 +96,47 @@ function Home() {
                 </FeatureWrapper>
             </HeaderWrapper>
 
-            {/*<AllSlidesWrapper>*/}
-            {/*    {currentCategory.map((slideItem) => (*/}
-            {/*        <SlideWrapper key={`${category}-${slideItem.title.toLowerCase()}`}>*/}
-            {/*            <SlideTitle>{slideItem.title}</SlideTitle>*/}
-            {/*            <AllCardsWrapper>*/}
-            {/*                {slideItem.data.map((cardItem) => (*/}
-            {/*                    <CardWrapper key={cardItem.docId}>*/}
-            {/*                        <CardImage*/}
-            {/*                            onClick={() => {*/}
-            {/*                                setShowCardFeature(true);*/}
-            {/*                                setActiveItem(cardItem);*/}
-            {/*                            }}*/}
-            {/*                            src={`../images/${category}/${cardItem.genre}/${cardItem.slug}/small.jpg`}*/}
-            {/*                        />*/}
-            {/*                    </CardWrapper>*/}
-            {/*                ))}*/}
-            {/*            </AllCardsWrapper>*/}
-            {/*            {showCardFeature &&*/}
-            {/*            slideItem.title.toLowerCase() === activeItem.genre ? (*/}
-            {/*                <CardFeatureWrapper*/}
-            {/*                    style={{*/}
-            {/*                        backgroundImage: `url(../images/${category}/${activeItem.genre}/${activeItem.slug}/large.jpg)`,*/}
-            {/*                    }}*/}
-            {/*                >*/}
-            {/*                    <CardTitle>{activeItem.title}</CardTitle>*/}
-            {/*                    <CardDescription>{activeItem.description}</CardDescription>*/}
-            {/*                    <CardFeatureClose onClick={() => setShowCardFeature(false)} />*/}
-            {/*                    <PlayButton onClick={() => setShowPlayer(true)}>*/}
-            {/*                        Play*/}
-            {/*                    </PlayButton>*/}
-            {/*                    {showPlayer ? (*/}
-            {/*                        <PlayerOverlay onClick={() => setShowPlayer(false)}>*/}
-            {/*                            <PlayerVideo src="../videos/video.mp4" type="video/mp4" />*/}
-            {/*                        </PlayerOverlay>*/}
-            {/*                    ) : null}*/}
-            {/*                </CardFeatureWrapper>*/}
-            {/*            ) : null}*/}
-            {/*        </SlideWrapper>*/}
-            {/*    ))}*/}
-            {/*</AllSlidesWrapper>*/}
+            <AllSlidesWrapper>
+                {currentCategory.map((slideItem) => ( // making a new array to have every genre
+                    <SlideWrapper key={`${category}-${slideItem.title.toLowerCase()}`}>
+                        <SlideTitle>{slideItem.title}</SlideTitle> // title of genre
+                        <AllCardsWrapper>
+                            {slideItem.data.map((cardItem) => (
+                                <CardWrapper key={cardItem.docId}>
+                                    <CardImage
+                                        onClick={() => {
+                                            setShowCardFeature(true);
+                                            setActiveItem(cardItem);
+                                        }}
+                                        src={`../images/${category}/${cardItem.genre}/${cardItem.slug}/small.jpg`}
+                                    />
+                                </CardWrapper>
+                            ))}
+                        </AllCardsWrapper>
+                        {showCardFeature &&
+                        slideItem.title.toLowerCase() === activeItem.genre ? (
+                            <CardFeatureWrapper
+                                style={{
+                                    backgroundImage: `url(../images/${category}/${activeItem.genre}/${activeItem.slug}/large.jpg)`,
+                                }}
+                            >
+                                <CardTitle>{activeItem.title}</CardTitle>
+                                <CardDescription>{activeItem.description}</CardDescription>
+                                <CardFeatureClose onClick={() => setShowCardFeature(false)} />
+                                <PlayButton onClick={() => setShowPlayer(true)}>
+                                    Play
+                                </PlayButton>
+                                {showPlayer ? (
+                                    <PlayerOverlay onClick={() => setShowPlayer(false)}>
+                                        <PlayerVideo src="../videos/video.mp4" type="video/mp4" />
+                                    </PlayerOverlay>
+                                ) : null}
+                            </CardFeatureWrapper>
+                        ) : null}
+                    </SlideWrapper>
+                ))}
+            </AllSlidesWrapper>
+
             <FooterCompound />
         </>
     );
