@@ -1,7 +1,7 @@
 import "./FeatureStyles.css";
 
 function FeatureWrapper({ children, ...restProps }) {
-  return <div {...restProps}>{children}</div>;
+  return <div className="feature-wrapper-home" {...restProps}>{children}</div>;
 }
 
 export default FeatureWrapper;

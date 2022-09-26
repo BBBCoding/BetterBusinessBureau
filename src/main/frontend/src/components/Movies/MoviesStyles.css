@@ -92,15 +92,6 @@
   width: 24px;
 }
 
-.player-video {
-  position: absolute;
-  top: 8vh;
-  width: 100%;
-  height: 70vh;
-  z-index: -1;
-  margin: auto;
-}
-
 .frame {
   width: 100%;
   height: 100%;
@@ -108,13 +99,16 @@
 
 .player-overlay {
   display: flex;
+  position: absolute;
   flex-direction: column;
   justify-content: center;
-  position: absolute;
   top: 10vh;
   left: 0;
   width: 100%;
   height: 70vh;
   background: rgba(0, 0, 0, 0.5);
-  opacity: 0.5
+}
+
+.player-wrapper-home {
+  position: relative;
 }

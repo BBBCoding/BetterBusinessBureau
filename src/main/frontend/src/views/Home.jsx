@@ -23,6 +23,7 @@ import PlayerOverlay from "../components/Movies/PlayerOverlay.jsx";
 import FooterCompound from "../compounds/FooterCompound.jsx";
 import YoutubeLinkFixer from "../youtubeLinkFixer.js"
 import Movies from "./movies.js";
+import PlayerWrapper from "../components/Movies/PlayerWrapper.jsx";
 function Home() {
 
     const {data: films, isPending, error} = Fetch("http://localhost:8080/api/v1/movies");
@@ -76,21 +77,22 @@ function Home() {
                     </HeaderLink>
                 </NavBar>
                 <FeatureWrapper>
-                    <FeatureTitle className="feature-title-browse">
-                        Watch&nbsp;
-                        { error && <div>{ error }</div> }
-                        { isPending && <div>Loading...</div> }
-                        { movies[0].data[0]?.title }
-                        &nbsp;Now
-                    </FeatureTitle>
-                    <FeatureSubTitle className="feature-subtitle-browse">
-                        { movies[0].data[0]?.plot }
-                    </FeatureSubTitle>
-                    <PlayButton onClick={() => setShowPlayer(true)}>Play</PlayButton>
                     <PlayerOverlay>
                         <PlayerVideo src={ movies[0].data[0]?.media.trailer_path }>
                         </PlayerVideo>
                     </PlayerOverlay>
+                    <PlayerWrapper>
+                        <FeatureTitle className="feature-title-browse">
+                            Watch&nbsp;
+                            { error && <div>{ error }</div> }
+                            { isPending && <div>Loading...</div> }
+                            { movies[0].data[0]?.title }
+                            &nbsp;Now
+                        </FeatureTitle>
+                        <FeatureSubTitle className="feature-subtitle-browse">
+                            { movies[0].data[0]?.plot }
+                        </FeatureSubTitle>
+                    </PlayerWrapper>
                 </FeatureWrapper>
             </HeaderWrapper>
 
