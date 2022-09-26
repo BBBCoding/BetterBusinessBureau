@@ -13,7 +13,6 @@ import FooterCompound from "../compounds/FooterCompound.jsx";
 import YoutubeLinkFixer from "../youtubeLinkFixer.js"
 import Movies from "./movies.js";
 import PlayerWrapper from "../components/Movies/PlayerWrapper.jsx";
-import {Link} from "react-router-dom";
 import AllSlidesWrapper from "../components/Movies/AllSlidesWrapper.jsx";
 import SlideWrapper from "../components/Movies/SlideWrapper.jsx";
 import AllCardsWrapper from "../components/Movies/AllCardsWrapper.jsx";
@@ -27,7 +26,7 @@ import SlideTitle from "../components/Movies/SlideTitle.jsx";
 
 function Home() {
     const {data: films, isPending, error} = Fetch("http://localhost:8080/api/v1/movies");
-    console.log(films ?? "cannot find films");
+    // console.log(films ?? "cannot find films");
     let movies = Movies;
 
     if (movies[0].data.length === 0) {
@@ -63,10 +62,10 @@ function Home() {
                 <NavBar className="navbar-browse">
                     <Logo />
                     <HeaderLink  href="/" className= {"home" ? "header-link-bold" : "header-link"}>
-                            Home
+                        Home
                     </HeaderLink>
                     <HeaderLink href="/genres" className= {"genres" ? "header-link" : "header-link-bold"}>
-                            Genres
+                        Genres
                     </HeaderLink>
                 </NavBar>
                 <FeatureWrapper>
@@ -91,7 +90,7 @@ function Home() {
             <AllSlidesWrapper>
                 {movies?.map((slideItem, index) => (
                     <SlideWrapper key={`${ index ?? Math.random()}`}>
-                        <SlideTitle>{ slideItem.title }</SlideTitle>
+                        <SlideTitle>{ activeItem ? slideItem.title : activeItem.title}</SlideTitle>
                         <AllCardsWrapper>
                             { !isPending && slideItem.data?.map((cardItem, index) => (
                                 <CardWrapper key={`${ index ?? Math.random()}`}>
@@ -103,23 +102,23 @@ function Home() {
                                         src={ cardItem.poster?.backdrop_path ?? "https://via.placeholder.com/450"}
                                     />
                                 </CardWrapper>
-                                ))}
+                            ))}
                         </AllCardsWrapper>
-
-                        {showCardFeature && cardItem?.title.toLowerCase() === activeItem.title ? (
-                            <CardFeatureWrapper
-                                style={{ backgroundImage: activeItem.poster.backdrop_path }}
-                            >
-                                <CardTitle>{ activeItem.title }</CardTitle>
-                                <CardDescription>{ activeItem.plot }</CardDescription>
-                                <CardFeatureClose onClick={() => setShowCardFeature(false)} />
-                                {showPlayer ? (
-                                    <PlayerOverlay onClick={() => setShowPlayer(false)}>
-                                        <PlayerVideo src={ activeItem.media.trailer_path } />
-                                    </PlayerOverlay>
-                                ) : null}
-                            </CardFeatureWrapper>
-                        ) : null}
+                        { !isPending && slideItem.data?.map((cardItem) => (
+                            showCardFeature && cardItem?.title.toLowerCase() === activeItem.title ? (
+                                <CardFeatureWrapper
+                                    style={{ backgroundImage: activeItem.poster.backdrop_path }}
+                                >
+                                    <CardTitle>{ activeItem.title }</CardTitle>
+                                    <CardDescription>{ activeItem.plot }</CardDescription>
+                                    <CardFeatureClose onClick={() => setShowCardFeature(false)} />
+                                    {showPlayer ? (
+                                        <PlayerOverlay onClick={() => setShowPlayer(false)}>
+                                            <PlayerVideo src={ activeItem.media.trailer_path } />
+                                        </PlayerOverlay>
+                                    ) : null}
+                                </CardFeatureWrapper>
+                            ) : null))}
                     </SlideWrapper>
                 ))}
             </AllSlidesWrapper>
