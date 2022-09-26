@@ -55,7 +55,7 @@ function Home() {
         for (let i = 0; i < genre.length; i++) {
             for (let j = 0; j < movies.length; j++) {
                 if (genre[i] === movies[j].title.toLowerCase()) {
-                        movieArray.push(movies[j].data);
+                    movieArray.push(movies[j].data);
                 }
             }
         }
@@ -74,12 +74,12 @@ function Home() {
                     <Logo />
                     <HeaderLink  className= {"home" ? "header-link-bold" : "header-link"}>
                         <Link to="/">
-                        Home
+                            Home
                         </Link>
                     </HeaderLink>
                     <HeaderLink className= {"genres" ? "header-link" : "header-link-bold"}>
                         <Link to="/genres">
-                        Genres
+                            Genres
                         </Link>
                     </HeaderLink>
                 </NavBar>
@@ -103,38 +103,38 @@ function Home() {
                 </FeatureWrapper>
             </HeaderWrapper>
             <AllSlidesWrapper>
-              {movies?.map((slideItem) => (
-            	  <SlideWrapper key={`${ slideItem.data.title }-${ slideItem.data.id }`}>
-            		  <SlideTitle>{ slideItem.title }</SlideTitle>
-            		  <AllCardsWrapper>
-            			  {films?.map((cardItem) => (
-                              <CardWrapper key={`${ slideItem?.title }-${ cardItem.id }`}>
-                                  <CardImage
-            						  onClick={() => {
-            							  setShowCardFeature(true);
-            							  setActiveItem(cardItem);
-            						  }}
-                                      src={ cardItem.poster?.backdrop_path ?? "https://via.placeholder.com/450" }
-            					  />
-                              </CardWrapper>
-            			  ))}
-            		  </AllCardsWrapper>
-            		  {showCardFeature && slideItem?.title.toLowerCase() === activeItem.title ? (
-            			  <CardFeatureWrapper
-            				  style={{ backgroundImage: activeItem.poster.backdrop_path }}
-            			  >
-            				  <CardTitle>{ activeItem.title }</CardTitle>
-            				  <CardDescription>{ activeItem.plot }</CardDescription>
-            				  <CardFeatureClose onClick={() => setShowCardFeature(false)} />
-            				  {showPlayer ? (
-            					  <PlayerOverlay onClick={() => setShowPlayer(false)}>
-            						  <PlayerVideo src={ activeItem.media.trailer_path } />
-            					  </PlayerOverlay>
-            				  ) : null}
-            			  </CardFeatureWrapper>
-            		  ) : null}
-            	  </SlideWrapper>
-              ))}
+                {movies?.map((slideItem) => (
+                    <SlideWrapper key={`${ slideItem.title ?? Math.random()}`}>
+                        <SlideTitle>{ slideItem.title }</SlideTitle>
+                        <AllCardsWrapper>
+                            {getMoviePosterByGenre()?.map((cardItem) => (
+                                <CardWrapper key={`${ slideItem.title ?? Math.random()}-${slideItem.data.id ?? Math.random()}`}>
+                                    <CardImage
+                                        onClick={() => {
+                                            setShowCardFeature(true);
+                                            setActiveItem(cardItem);
+                                        }}
+                                        src={ cardItem.poster?.backdrop_path ?? "https://via.placeholder.com/450" }
+                                    />
+                                </CardWrapper>
+                            ))}
+                        </AllCardsWrapper>
+                        {showCardFeature && slideItem?.title.toLowerCase() === activeItem.title ? (
+                            <CardFeatureWrapper
+                                style={{ backgroundImage: activeItem.poster.backdrop_path }}
+                            >
+                                <CardTitle>{ activeItem.title }</CardTitle>
+                                <CardDescription>{ activeItem.plot }</CardDescription>
+                                <CardFeatureClose onClick={() => setShowCardFeature(false)} />
+                                {showPlayer ? (
+                                    <PlayerOverlay onClick={() => setShowPlayer(false)}>
+                                        <PlayerVideo src={ activeItem.media.trailer_path } />
+                                    </PlayerOverlay>
+                                ) : null}
+                            </CardFeatureWrapper>
+                        ) : null}
+                    </SlideWrapper>
+                ))}
             </AllSlidesWrapper>
             <FooterCompound />
         </>

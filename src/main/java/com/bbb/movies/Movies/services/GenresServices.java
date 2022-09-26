@@ -3,7 +3,6 @@ package com.bbb.movies.Movies.services;
 import com.bbb.movies.Movies.exceptions.RecordNotFoundException;
 import com.bbb.movies.Movies.repositories.GenresRepository;
 import com.bbb.movies.Movies.views.Genre;
-import com.bbb.movies.Movies.views.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,10 +34,10 @@ public class GenresServices {
 
     public Genre getGenreById(Long id) throws RecordNotFoundException
     {
-        Optional<Genre> employee = repository.findById(id);
+        Optional<Genre> genre = repository.findById(id);
 
-        if(employee.isPresent()) {
-            return employee.get();
+        if(genre.isPresent()) {
+            return genre.get();
         } else {
             throw new RecordNotFoundException("No movie record exist for given id");
         }
