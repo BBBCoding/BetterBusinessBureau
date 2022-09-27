@@ -1,7 +1,30 @@
-
+@font-face {
+    font-family: 'Concourse';
+    src: url('/fonts/Concourse T4 Regular.otf') format('opentype');
+}
+@font-face {
+    font-family: 'Concourse';
+    src: url('/fonts/Concourse T4 Bold.otf') format('opentype');
+    font-weight: bold;
+}
+@font-face {
+    font-family: 'Concourse';
+    src: url('/fonts/Concourse T4 Italic.otf') format('opentype');
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Concourse';
+    src: url('/fonts/Concourse T4 Bold Italic.otf') format('opentype');
+    font-weight: bold;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Advocate';
+    src: url('../public/fonts/Advocate C65 Regular.otf') format('opentype');
+}
 html,
 body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Concourse", sans-serif;
     background-size: cover;
     background: linear-gradient(145deg, #E1909E 0%, #7c7587 100%) fixed;
     /*color: #fff;*/
@@ -13,6 +36,16 @@ body {
 
 a {
     text-decoration: none;
+    font-family: "Advocate", monospace;
+    font-size: 1.3em;
+}
+
+h1 {
+    font-family: "Advocate", sans-serif;
+    font-size: 3em;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
 }
 
 * {

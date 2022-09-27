@@ -26,7 +26,7 @@ import SlideTitle from "../components/Movies/SlideTitle.jsx";
 
 function Home() {
     const {data: films, isPending, error} = Fetch("http://localhost:8080/api/v1/movies");
-    // console.log(films ?? "cannot find films");
+
     let movies = Movies;
 
     if (movies[0].data.length === 0) {
@@ -49,8 +49,6 @@ function Home() {
         });
     }
 
-
-
     const [showCardFeature, setShowCardFeature] = useState(false); // not sure
     const [activeItem, setActiveItem] = useState(false); // set when active card is selected
     const [showPlayer, setShowPlayer] = useState(false); // eventually checks if there is a trailer and plays it if available
@@ -70,7 +68,7 @@ function Home() {
                 </NavBar>
                 <FeatureWrapper>
                     <PlayerOverlay>
-                        <PlayerVideo src={ movies[0].data[showCase]?.media.trailer_path ?? movies[0].data[0]?.media.trailer_path }>
+                        <PlayerVideo src={ activeItem ? activeItem.media.trailer_path : movies[0].data[showCase]?.media.trailer_path ?? movies[0].data[0]?.media.trailer_path }>
                         </PlayerVideo>
                     </PlayerOverlay>
                     <PlayerWrapper>
@@ -78,11 +76,11 @@ function Home() {
                             Watch&nbsp;
                             { error && <div>{ error }</div> }
                             { isPending && <div>Loading...</div> }
-                            { movies[0].data[showCase]?.title ?? movies[0].data[0]?.title }
+                            { activeItem ? activeItem.title : movies[0].data[showCase]?.title ?? movies[0].data[0]?.title }
                             &nbsp;Now
                         </FeatureTitle>
                         <FeatureSubTitle className="feature-subtitle-browse">
-                            { movies[0].data[showCase]?.plot ?? movies[0].data[0]?.plot }
+                            { activeItem ? activeItem.plot : movies[0].data[showCase]?.plot ?? movies[0].data[0]?.plot }
                         </FeatureSubTitle>
                     </PlayerWrapper>
                 </FeatureWrapper>
@@ -90,7 +88,7 @@ function Home() {
             <AllSlidesWrapper>
                 {movies?.map((slideItem, index) => (
                     <SlideWrapper key={`${ index ?? Math.random()}`}>
-                        <SlideTitle>{ activeItem ? slideItem.title : activeItem.title}</SlideTitle>
+                        <SlideTitle>{ slideItem.title }</SlideTitle>
                         <AllCardsWrapper>
                             { !isPending && slideItem.data?.map((cardItem, index) => (
                                 <CardWrapper key={`${ index ?? Math.random()}`}>
@@ -101,6 +99,7 @@ function Home() {
                                         }}
                                         src={ cardItem.poster?.backdrop_path ?? "https://via.placeholder.com/450"}
                                     />
+                                    <CardTitle>{ cardItem.title }</CardTitle>
                                 </CardWrapper>
                             ))}
                         </AllCardsWrapper>
