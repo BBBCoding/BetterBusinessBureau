@@ -23,6 +23,7 @@ import CardTitle from "../components/Movies/CardTitle.jsx";
 import CardDescription from "../components/Movies/CardDescription.jsx";
 import CardFeatureClose from "../components/Movies/CardFeatureClose.jsx";
 import SlideTitle from "../components/Movies/SlideTitle.jsx";
+import Search from "../components/Header/Search.jsx";
 
 function Home() {
     const {data: films, isPending, error} = Fetch("http://localhost:8080/api/v1/movies");
@@ -65,7 +66,15 @@ function Home() {
                     <HeaderLink href="/genres" className= {"genres" ? "header-link" : "header-link-bold"}>
                         Genres
                     </HeaderLink>
+                    <HeaderLink href="/edit" className= {"edit" ? "header-link" : "header-link-bold"}>
+                        Edit Movie
+                    </HeaderLink>
+                    <HeaderLink href="/add" className= {"edit" ? "header-link" : "header-link-bold"}>
+                        Add Movie
+                    </HeaderLink>
                 </NavBar>
+                {/*<Search/>*/}
+            </HeaderWrapper>
                 <FeatureWrapper>
                     <PlayerOverlay>
                         <PlayerVideo src={ activeItem ? activeItem.media.trailer_path : movies[0].data[showCase]?.media.trailer_path ?? movies[0].data[0]?.media.trailer_path }>
@@ -84,7 +93,6 @@ function Home() {
                         </FeatureSubTitle>
                     </PlayerWrapper>
                 </FeatureWrapper>
-            </HeaderWrapper>
             <AllSlidesWrapper>
                 {movies?.map((slideItem, index) => (
                     <SlideWrapper key={`${ index ?? Math.random()}`}>
